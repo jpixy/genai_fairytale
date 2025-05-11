@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>儿童童话生成器</title>
+</head>
+<body>
+    <h1>儿童童话生成器</h1>
+    <form method="POST">
+        <label for="keyword">请输入关键字：</label>
+        <input type="text" id="keyword" name="keyword" required>
+        <button type="submit">生成故事</button>
+    </form>
+    <div>
+        {% if story %}
+            <h2>生成的故事：</h2>
+            <p>{{ story }}</p>
+            {% if image_path %}
+                <h2>生成的插图：</h2>
+                <img src="{{ url_for('serve_image', filename=image_path.split('/')[-1]) }}" alt="插图">
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
