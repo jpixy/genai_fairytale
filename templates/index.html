@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI童话生成器</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>AI童话生成器</h1>
+        
+        <form method="POST">
+            <input type="text" name="keyword" placeholder="输入故事主角（如：勇敢的小熊）" required>
+            <button type="submit">生成童话</button>
+        </form>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <div id="results">
+            {% if story %}
+                <div class="story-box">
+                    <h2>{{ keyword }}的童话故事</h2>
+                    <div class="full-story" style="display: none;">{{ story }}</div>
+                    <div class="short-story">{{ story_short }}</div>
+                    <button onclick="toggleStory()">显示完整故事</button>
+                </div>
+                
+                {% if image_file %}
+                    <div class="image-box">
+                        <h2>故事插图</h2>
+                        <img src="/images/{{ image_file }}" alt="{{ keyword }}的童话插图">
+                        <a href="/images/{{ image_file }}" download>下载图片</a>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function toggleStory() {
+            const full = document.querySelector('.full-story');
+            const short = document.querySelector('.short-story');
+            const btn = document.querySelector('#results button');
+            
+            if (full.style.display === 'none') {
+                full.style.display = 'block';
+                short.style.display = 'none';
+                btn.textContent = '收起故事';
+            } else {
+                full.style.display = 'none';
+                short.style.display = 'block';
+                btn.textContent = '显示完整故事';
+            }
+        }
+    </script>
+</body>
+</html>
