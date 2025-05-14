@@ -1,10 +1,8 @@
 setup:
 	pip install -r requirements.txt
-	export HF_ENDPOINT=https://hf-mirror.com
 
-run:
-	python main.py
+cli:
+	python cli.py
 
-run_web:
+web:
 	python app.py
-

@@ -1,0 +1,30 @@
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.container {
+    background: #f9f4e8;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    width: 300px;
+}
+
+button {
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+}
+
+.story {
+    white-space: pre-line;
+    margin-top: 20px;
+}
