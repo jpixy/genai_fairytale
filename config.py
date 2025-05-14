@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).parent
 
 MODEL_CONFIG = {
     "name": "Alibaba-NLP/gme-Qwen2-VL-2B-Instruct",
-    "local_dir": str(BASE_DIR / "models/gme-Qwen2-VL-2B-Instruct"),
+    "local_dir": str(BASE_DIR / "models/Qwen2-VL-2B"),
     "generation": {
         "max_new_tokens": 900,
         "temperature": 0.7,
