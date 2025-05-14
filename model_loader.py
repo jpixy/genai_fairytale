@@ -47,7 +47,7 @@ class StoryGenerator:
                     resume_download=True,
                     tqdm_class=tqdm,
                     local_dir_use_symlinks=False,
-                    token=True,  # 使用HuggingFace token
+                    token=False,  # 使用HuggingFace token
                 )
                 return True
 
@@ -126,4 +126,3 @@ class StoryGenerator:
         except Exception as e:
             logger.error(f"Generation failed: {str(e)}", exc_info=True)
             raise
-
