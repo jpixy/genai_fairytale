@@ -13,7 +13,7 @@ MODEL_CONFIG = {
         "do_sample": True,
         "repetition_penalty": 1.8,
     },
-    "system_prompt": """你是一位专业童话作家...""",  # 保持原有内容
+    "system_prompt": """你是一位专业童话作家...""",
 }
 
 logging.basicConfig(

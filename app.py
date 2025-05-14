@@ -15,30 +15,27 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)  # 设置Flask密钥
+app.secret_key = os.urandom(24)
 app.static_folder = "static"
 generator = StoryGenerator()
 
-# 确保输出目录存在
 output_dir = Path("outputs/stories")
 output_dir.mkdir(parents=True, exist_ok=True)
 
 
 @app.before_first_request
 def initialize():
-    """初始化模型加载"""
     try:
-        logger.info("Initializing story generator...")
+        logger.info("Initializing story generator")
         if not generator.model_dir.exists():
-            flash("首次使用需要下载模型，请稍候...", "info")
+            flash("First use requires model download, please wait", "info")
             generator.load_model()
-            flash("模型加载完成！", "success")
+            flash("Model loaded successfully", "success")
         else:
             generator.load_model()
     except Exception as e:
         logger.error(f"Initialization failed: {e}")
-        flash(f"模型加载失败: {str(e)}", "danger")
-        # 清理可能损坏的下载
+        flash(f"Model loading failed: {str(e)}", "danger")
         if generator.model_dir.exists():
             shutil.rmtree(generator.model_dir)
 
@@ -48,14 +45,13 @@ def index():
     if request.method == "POST":
         keyword = request.form.get("keyword", "").strip()
         if not keyword:
-            flash("请输入故事主角名称", "warning")
+            flash("Please enter story character name", "warning")
             return redirect(url_for("index"))
 
         try:
             logger.info(f"Generating story for: {keyword}")
             story = generator.generate(keyword)
 
-            # 保存故事文件
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f"{keyword}_{timestamp}.txt"
             filepath = output_dir / filename
@@ -71,10 +67,9 @@ def index():
                 char_count=len(story),
                 generate_time=datetime.now().strftime("%Y-%m-%d %H:%M"),
             )
-
         except Exception as e:
             logger.error(f"Generation failed: {e}")
-            flash(f"生成失败: {str(e)}", "danger")
+            flash(f"Generation failed: {str(e)}", "danger")
             return redirect(url_for("index"))
 
     return render_template("index.html")
@@ -82,13 +77,12 @@ def index():
 
 @app.route("/download/<filename>")
 def download(filename):
-    """下载生成的故事文件"""
     try:
         return send_from_directory(
             output_dir, filename, as_attachment=True, mimetype="text/plain"
         )
     except FileNotFoundError:
-        flash("文件不存在或已被删除", "warning")
+        flash("File does not exist or has been deleted", "warning")
         return redirect(url_for("index"))
 
 
